@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from lifelines import KaplanMeierFitter
 from lifelines.datasets import load_dd
 from lifelines.utils import survival_table_from_events
+import pandas as pd
 
 # Charger les données
 data = load_dd()
@@ -36,11 +37,14 @@ else:
     st.pyplot(fig)
 
 # Estimation de la probabilité de survie et intervalle de confiance avec KaplanMeier
-st.subheader('Estimation de la probabilité de survie')
+st.subheader('Estimation de la probabilité de survie et intervalle de confiance')
 kmf = KaplanMeierFitter()
 kmf.fit(data['duration'], event_observed=data['observed'])
-st.write("Tableau des proportions de survivants:")
-st.write(survival_table_from_events(kmf.event_observed, kmf.durations).head())
+
+# Tableau des proportions de survivants à l’instant t
+st.text("Tableau des proportions de survivants à l’instant t (t=0,…., n) :")
+table = survival_table_from_events(kmf.event_observed, kmf.durations)
+st.write(table)
 
 # Affichage de la courbe de survie avec intervalle de confiance
 st.subheader('Courbe de survie avec intervalle de confiance')
