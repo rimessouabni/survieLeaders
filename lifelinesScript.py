@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from lifelines import KaplanMeierFitter
 from lifelines.datasets import load_dd
 from lifelines.utils import survival_table_from_events
-import pandas as pd
 
 # Charger les données
 data = load_dd()
